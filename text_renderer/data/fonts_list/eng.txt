@@ -1,0 +1,7 @@
+./data/fonts/eng/CaviarDreams.ttf
+./data/fonts/eng/Chunk Five Print.otf
+./data/fonts/eng/Hack-Regular.ttf
+./data/fonts/eng/OpenSans-Italic.ttf
+./data/fonts/eng/OpenSans-Regular.ttf
+./data/fonts/eng/Roboto-BlackItalic.ttf
+./data/fonts/eng/Roboto-Medium.ttf
