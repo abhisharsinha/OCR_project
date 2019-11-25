@@ -26,7 +26,7 @@ class Config(object):
 
     # Optimization
     NUM_EPOCH = 1000
-    BATCH_SIZE = 512
+    BATCH_SIZE = 128
     INITIAL_LEARNING_RATE = 0.5
 
     # Network parameters
@@ -38,12 +38,12 @@ class Config(object):
     # (Encoder number of hidden units will be ATTN_NUM_HIDDEN*ATTN_NUM_LAYERS)
     LOAD_MODEL = True
     OLD_MODEL_VERSION = False
-    TARGET_VOCAB_SIZE = 26+26+10+3  # 0: PADDING, 1: GO, 2: EOS, >2: 0-9, a-z
+    TARGET_VOCAB_SIZE = 81 + 3  # 0: PADDING, 1: GO, 2: EOS, >2: 0-9, a-z
     CHANNELS = 3  # number of color channels from source image (1 = grayscale, 3 = rgb)
 
     MAX_WIDTH = 300
     MAX_HEIGHT = 40
-    MAX_PREDICTION = 8
+    MAX_PREDICTION = 15 # Only 1k labels greater than this in the dataset
 
     USE_DISTANCE = True
 

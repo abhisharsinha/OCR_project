@@ -20,7 +20,8 @@ class DataGen(object):
     GO_ID = 1
     EOS_ID = 2
     IMAGE_HEIGHT = 32
-    CHARMAP = ['', '', ''] + list('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+    alphabet = "!\"#&\'()*,-.0123456789:;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]`abcdefghijklmnopqrstuvwxyz "
+    CHARMAP = ['', '', ''] + list(alphabet)
 
     @staticmethod
     def set_full_ascii_charmap():
@@ -66,7 +67,7 @@ class DataGen(object):
                 try:
                     raw_images, raw_labels, raw_comments = sess.run([images, labels, comments])
                     for img, lex, comment in zip(raw_images, raw_labels, raw_comments):
-
+                        # print(raw_labels)
                         if self.max_width and (Image.open(IO(img)).size[0] <= self.max_width):
                             word = self.convert_lex(lex)
 
@@ -84,7 +85,14 @@ class DataGen(object):
 
     def convert_lex(self, lex):
         if sys.version_info >= (3,):
+            # Trying to resolve AssertionError
+            # assert len(lex) < self.bucket_specs[-1][1]
+
+            # print(type(lex)) --> Bytes
             lex = lex.decode('iso-8859-1')
+            # print(lex, len(lex))
+            # print(type(self.bucket_specs)) --> list
+            # print(self.bucket_specs)
 
         assert len(lex) < self.bucket_specs[-1][1]
 

@@ -17,7 +17,7 @@ def _int64_feature(value):
 
 
 def generate(annotations_path, output_path, log_step=5000,
-             force_uppercase=True, save_filename=False):
+             force_uppercase=False, save_filename=False):
 
     logging.info('Building a dataset from %s.', annotations_path)
     logging.info('Output file: %s', output_path)
@@ -37,6 +37,9 @@ def generate(annotations_path, output_path, log_step=5000,
                 logging.error('missing filename or label, ignoring line %i: %s', idx+1, line)
                 continue
             (img_path, label) = line_match.groups()
+
+            if len(label) > 15:
+                continue
 
             with open(img_path, 'rb') as img_file:
                 img = img_file.read()

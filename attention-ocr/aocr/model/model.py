@@ -41,7 +41,7 @@ class Model(object):
                  use_distance=True,
                  max_image_width=160,
                  max_image_height=60,
-                 max_prediction_length=8,
+                 max_prediction_length=18,
                  channels=1,
                  reg_val=0):
 
