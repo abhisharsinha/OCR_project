@@ -1,2 +1,2 @@
 1. Create test images from different disribution. Using fonts and backgrounds not in training data.
-2. Since business cards may include email ids, add more to the train data. Also add more numbers.
+DONE 2. Since business cards may include email ids, add more to the train data. Also add more numbers.
