@@ -31,3 +31,12 @@ with open(file_path, "r") as f:
 		if len(" ".join(line.split()[1:])) > THRESHOLD:
 			num_larg_labels += 1
 print("{0} labels greater than threshold {1}".format(num_larg_labels, THRESHOLD))
+
+# Checking how many labels in the modified dataset includes @ symbol
+count_at_sym = 0
+num_larg_labels = 0
+with open(file_path, "r") as f:
+	for line in f.readlines():
+		if len(" ".join(line.split()[1:])) <= THRESHOLD and '2' in line:
+			count_at_sym += 1
+print(count_at_sym)
