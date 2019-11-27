@@ -20,3 +20,5 @@
 4. Tested the model.
 
 27 Nov: 
+1. Exported the model.
+2. Started writing the API.

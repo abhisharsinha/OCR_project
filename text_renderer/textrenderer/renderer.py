@@ -153,7 +153,7 @@ class Renderer(object):
         Crop text from large input image
         :param img: image to crop
         :param text_box_pnts_transformed: text_bbox_pnts after apply_perspective_transform
-        :return:
+        :return:Cameraman
             dst: image with desired output size, height=32, width=flags.img_width
             crop_bbox: bounding box on input image
         """

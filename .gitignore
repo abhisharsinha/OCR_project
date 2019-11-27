@@ -2,3 +2,5 @@ datasets
 text_renderer/output
 checkpoints
 out
+MODELS
+exported-model
