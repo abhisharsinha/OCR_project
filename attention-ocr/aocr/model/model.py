@@ -19,6 +19,8 @@ from .seq2seq_model import Seq2SeqModel
 from ..util.data_gen import DataGen
 from ..util.visualizations import visualize_attention
 
+import matplotlib.pyplot as plt
+
 
 class Model(object):
     def __init__(self,
@@ -46,6 +48,7 @@ class Model(object):
                  reg_val=0):
 
         self.use_distance = use_distance
+        self.start_time = str(int(time.time()))
 
         # We need resized width, not the actual width
         max_resized_width = 1. * max_image_width / max_image_height * DataGen.IMAGE_HEIGHT
@@ -102,6 +105,26 @@ class Model(object):
         self.learning_rate = initial_learning_rate
         self.clip_gradients = clip_gradients
         self.channels = channels
+
+        train_config_file = "history/training_config" + self.start_time + ".txt"
+        with open(train_config_file, "w") as f:
+            print('model_dir: ', model_dir, file=f)
+            print('phase: ', phase, file=f)
+            print('load_model: ', load_model, file=f)
+            print('output_dir: ', output_dir, file=f)
+            print('steps_per_checkpoint: ', steps_per_checkpoint, file=f)
+            print('batch_size: ', batch_size, file=f)
+            print('learning_rate: ', initial_learning_rate, file=f)
+            print('reg_val: ', reg_val, file=f)
+            print('max_gradient_norm: ', max_gradient_norm, file=f)
+            print('clip_gradients: ', clip_gradients, file=f)
+            print('max_image_width ', max_image_width, file=f)
+            print('max_prediction_length ', max_prediction_length, file=f)
+            print('channels: ', channels, file=f)
+            print('target_embedding_size: ', target_embedding_size, file=f)
+            print('attn_num_hidden: ', attn_num_hidden, file=f)
+            print('attn_num_layers: ', attn_num_layers, file=f)
+            print('visualize: ', visualize, file=f)
 
         if phase == 'train':
             self.forward_only = False
@@ -371,6 +394,7 @@ class Model(object):
         current_step = 0
         skipped_counter = 0
         writer = tf.summary.FileWriter(self.model_dir, self.sess.graph)
+        step_losses = []
 
         logging.info('Starting the training process.')
         for batch in s_gen.gen(self.batch_size):
@@ -394,6 +418,7 @@ class Model(object):
             curr_step_time = (time.time() - start_time)
             step_time += curr_step_time / self.steps_per_checkpoint
 
+            step_losses.append(result["loss"])
             # num_correct = 0
 
             # step_outputs = result['prediction']
@@ -437,6 +462,21 @@ class Model(object):
 
         if skipped_counter:
             logging.info("Skipped {} batches due to errors.".format(skipped_counter))
+
+
+        # Plotting training loss and saving the plot
+        current_time = self.start_time # For identifying files
+        loss_plot_file = "history/training_loss_" + current_time + ".png"
+        loss_values_file = "history/training_loss_" + current_time + ".txt"
+        plt.plot(range(1,len(step_losses)+1), step_losses)
+        plt.title("Training loss")
+        plt.xlabel("Steps")
+        plt.ylabel("Loss")
+        plt.savefig(loss_plot_file)
+        # Saving loss values to file
+        with open(loss_values_file, "w") as f:
+            print(*step_losses, sep="\n", file=f)
+        plt.figure(figsize=(12,8))
 
         # Save checkpoint and reset timer and loss.
         logging.info("Finishing the training and saving the model at step %d.", current_step)

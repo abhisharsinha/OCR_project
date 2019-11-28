@@ -21,4 +21,10 @@
 
 27 Nov: 
 1. Exported the model.
-2. Started writing the API.
+2. Completed writing the API.
+
+28 Nov:
+1. Generated new data for training using different fonts and backgrounds.
+2. Changed aocr to save loss history, train configuration and training loss plot.
+3. Generated a small dataset of 900 images to try different model configurations and select the best one for traing with bigger dataset.
+4. Started training small dataset using different configurations.

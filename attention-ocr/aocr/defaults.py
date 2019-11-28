@@ -43,7 +43,7 @@ class Config(object):
 
     MAX_WIDTH = 300
     MAX_HEIGHT = 40
-    MAX_PREDICTION = 15 # Only 1k labels greater than this in the dataset
+    MAX_PREDICTION = 15
 
     USE_DISTANCE = True
 

@@ -1,26 +1,30 @@
 # Small font_size will make text looks like blured/prydown
 font_size:
-  min: 14
-  max: 23
+  min: 10
+  max: 25
 
 # choose Text color range
 # color boundary is in R,G,B format
 font_color:
   enable: true
   black:
-    fraction: 0.4
+    fraction: 0.45
     l_boundary: [0,0,0]
     h_boundary: [30,30,30]
+  white:
+    fraction: 0.05
+    l_boundary: [200,200,200]
+    h_boundary: [255,255,255]
   blue:
-    fraction: 0.15
+    fraction: 0.20
     l_boundary: [0,0,150]
     h_boundary: [60,60,255]
   brown:
-    fraction: 0.15
+    fraction: 0.10
     l_boundary: [139,70,19]
     h_boundary: [160,82,43]
   green:
-    fraction: 0.15
+    fraction: 0.05
     l_boundary: [0,150,0]
     h_boundary: [60,255,60]
   red:
@@ -31,15 +35,15 @@ font_color:
 # By default, text is drawed by Pillow with (https://stackoverflow.com/questions/43828955/measuring-width-of-text-python-pil)
 # If `random_space` is enabled, some text will be drawed char by char with a random space
 random_space:
-  enable: false
-  fraction: 0.5
+  enable: true
+  fraction: 0.1
   min: -0.05 # -0.1 will make chars very close or even overlapped
   max: 0.1
 
 # Do remap with sin()
 # Currently this process is very slow!
 curve:
-  enable: false
+  enable: true
   fraction: 0.3
   period: 360  # degree, sin 函数的周期
   min: 1 # sin 函数的幅值范围
@@ -53,19 +57,19 @@ crop:
   # top and bottom will applied equally
   top:
     min: 5
-    max: 10 # in pixel, this value should small than img_height
+    max: 12 # in pixel, this value should small than img_height
   bottom:
     min: 5
-    max: 10 # in pixel, this value should small than img_height
+    max: 12 # in pixel, this value should small than img_height
 
 # Use image in bg_dir as background for text
 img_bg:
   enable: true
-  fraction: 0.3
+  fraction: 0.6
 
 # Not work when random_space applied
 text_border:
-  enable: true
+  enable: false
   fraction: 0.25
 
   # lighter than word color
@@ -88,19 +92,19 @@ seamless_clone:
 
 perspective_transform:
   enable: true
-  fraction: 0.4
-  max_x: 25
-  max_y: 25
-  max_z: 3
+  fraction: 0.6
+  max_x: 30
+  max_y: 30
+  max_z: 10
 
 blur:
   enable: true
-  fraction: 0.1
+  fraction: 0.3
 
 # If an image is applied blur, it will not be applied prydown
 prydown:
   enable: true
-  fraction: 0.1
+  fraction: 0.3
   max_scale: 1.5 # Image will first resize to 1.5x, and than resize to 1x
 
 noise:
@@ -113,11 +117,11 @@ noise:
 
   uniform:
     enable: true
-    fraction: 0.25
+    fraction: 0.35
 
   salt_pepper:
     enable: true
-    fraction: 0.25
+    fraction: 0.15
 
   poisson:
     enable: true
@@ -125,7 +129,7 @@ noise:
 
 line:
   enable: true
-  fraction: 0.02
+  fraction: 0.1
 
   under_line:
     enable: true

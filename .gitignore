@@ -4,3 +4,6 @@ checkpoints
 out
 MODELS
 exported-model
+text_renderer/data
+small-data
+history

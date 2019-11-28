@@ -1,18 +1,22 @@
 # Small font_size will make text looks like blured/prydown
 font_size:
-  min: 14
-  max: 23
+  min: 5
+  max: 20
 
 # choose Text color range
 # color boundary is in R,G,B format
 font_color:
   enable: true
-  blue:
-    fraction: 0.5
+  black:
+    fraction: 0.4
     l_boundary: [0,0,150]
     h_boundary: [60,60,255]
+  blue:
+    fraction: 0.3
+    l_boundary: [0,0,200]
+    h_boundary: [60,60,255]
   brown:
-    fraction: 0.5
+    fraction: 0.4
     l_boundary: [139,70,19]
     h_boundary: [160,82,43]
 
