@@ -311,6 +311,8 @@ class Model(object):
         current_step = 0
         num_correct = 0.0
         num_total = 0.0
+        test_error_log_file = open("test_errors_log_"+self.start_time, "w")
+        print("predicted, true", file=test_error_log_file)
 
         s_gen = DataGen(data_path, self.buckets, epochs=1, max_width=self.max_original_width)
         for batch in s_gen.gen(1):
@@ -331,6 +333,10 @@ class Model(object):
                 comment = comment.decode('iso-8859-1')
 
             probability = result['probability']
+
+            # Logging errors to file
+            if predicted != ground:
+                print(predicted, ground, file=test_error_log_file)
 
             if self.use_distance:
                 incorrect = distance.levenshtein(output, ground)
@@ -382,6 +388,8 @@ class Model(object):
                              math.exp(result['loss']) if result['loss'] < 300 else float('inf'),
                              probability,
                              correctness))
+
+        test_error_log_file.close()
 
     def train(self, data_path, num_epoch):
         logging.info('num_epoch: %d', num_epoch)

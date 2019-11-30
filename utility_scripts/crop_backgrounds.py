@@ -1,3 +1,5 @@
+# Script to split one background images into multiple images
+
 import cv2
 import os
 

@@ -5,6 +5,8 @@ alphanum = "abcdefghijklmnopqrstuvwxyz1234567890"
 
 emails = []
 for _ in range(2000):
+	# Generate random string of format [a-z0-9]@[a-z0-9].[a-z0-9]
+	# to look like an email id
 	k = random.randint(3,7)
 	email = "".join(random.choices(alphanum, k = k))
 	k = random.randint(2,3)
@@ -16,6 +18,7 @@ for _ in range(2000):
 numbers = []
 for _ in range(500):
 	n = random.randint(5,10)
+	# Genereate random number of random length
 	numbers.append("".join([str(random.randint(0,9)) for i in range(n)]))
 with open("fake_emails_nums.txt", "a") as f:
 	print(*emails, sep="\n", file=f)
