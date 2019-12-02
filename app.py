@@ -6,11 +6,15 @@
 
 
 from flask import Flask, request, redirect, jsonify
-import matplotlib.pyplot as plt
-import numpy as np
-import cv2
 import tensorflow as tf
-export_path = "./exported-model"
+import sys
+
+if not len(sys.argv) == 2:
+    raise Exception("Provide path of savedmodel")
+
+# path of saved model
+# eg: ./exported-model
+export_path = sys.argv[1]
 
 app = Flask(__name__)
 
@@ -19,25 +23,34 @@ tf.saved_model.loader.load(sess, ["serve"], export_path)
 
 @app.route("/", methods=["POST", "GET"])
 def detect_text():
+    if request.method == "GET":
+        return app.send_static_file('./index.html')
     if request.method == "POST":
-        if "image" not in request.files:
-            print("NO files")
-        else:
-            print("File got")
         files = request.files.getlist("image")
         send_res = {"response":[]}
+        images = []
+        filenames = []
         for img in files:
-            print("Image:", img.filename)
             image = img.read()
-            out = sess.run(['prediction:0', 'probability:0'], feed_dict={'input_image_as_bytes:0': image})
-            print(out)
-            temp = {"filename":img.filename, "prediction":out[0].decode("utf-8"), "probability":out[1]}
+            images.append(image)
+            filenames.append(img.filename)
+        
+        out = sess.run(['prediction:0', 'probability:0'], feed_dict={'input_image_as_bytes:0': images}) 
+        # Returns a list of two lists for pred and prob
+
+        for img_name, pred, prob in zip(filenames, out[0], out[1]):
+            temp = {"filename":img_name, "prediction":pred.decode("utf-8"), "probability":prob}
             send_res["response"].append(temp)
-        sess.close()
+        
         return jsonify(send_res)
-    if request.method == "GET":
-        return redirect("file:///home/abhishar/Desktop/Abhishar_Sinha-IITB-Assignment/client.html")
+
+def main():
+    app.run(host="localhost")
 
 if __name__ == "__main__":
-    app.run(host="localhost")
-    # close the session properly
+    # Free gpu memory by calling sess.close on keyboard interrupt
+
+    try:
+        main()
+    except KeyboardInterrupt:
+        sess.close()

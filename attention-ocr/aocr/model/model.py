@@ -15,6 +15,7 @@ import tensorflow as tf
 
 from six.moves import xrange  # pylint: disable=redefined-builtin
 from .cnn import CNN
+from .cnn_custom_two import CNN_custom
 from .seq2seq_model import Seq2SeqModel
 from ..util.data_gen import DataGen
 from ..util.visualizations import visualize_attention
@@ -39,6 +40,7 @@ class Model(object):
                  session,
                  load_model,
                  gpu_id,
+                 custom_cnn,
                  use_gru,
                  use_distance=True,
                  max_image_width=160,
@@ -163,7 +165,10 @@ class Model(object):
                 else:
                     self.target_weights.append(tf.tile([0.], [num_images]))
 
-            cnn_model = CNN(self.img_data, not self.forward_only)
+            if self.custom_cnn:
+                cnn_model = CNN_custom(self.img_data, not self.forward_only)
+            else:
+                cnn_model = CNN(self.img_data, not self.forward_only)
             self.conv_output = cnn_model.tf_output()
             self.perm_conv_output = tf.transpose(self.conv_output, perm=[1, 0, 2])
             self.attention_decoder_model = Seq2SeqModel(
@@ -312,7 +317,7 @@ class Model(object):
         num_correct = 0.0
         num_total = 0.0
         test_error_log_file = open("test_errors_log_"+self.start_time, "w")
-        print("predicted, true", file=test_error_log_file)
+        print("predicted ;;; true", file=test_error_log_file)
 
         s_gen = DataGen(data_path, self.buckets, epochs=1, max_width=self.max_original_width)
         for batch in s_gen.gen(1):
@@ -335,8 +340,8 @@ class Model(object):
             probability = result['probability']
 
             # Logging errors to file
-            if predicted != ground:
-                print(predicted, ground, file=test_error_log_file)
+            if output != ground:
+                print(output, ";;;", ground, file=test_error_log_file)
 
             if self.use_distance:
                 incorrect = distance.levenshtein(output, ground)

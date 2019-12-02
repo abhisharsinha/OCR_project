@@ -87,6 +87,9 @@ def process_args(args, defaults):
     parser_model.add_argument('--gpu-id', dest="gpu_id", metavar=defaults.GPU_ID,
                               type=int, default=defaults.GPU_ID,
                               help='specify a GPU ID')
+    # To use custom cnn model
+    parser_model.add_argument('--custom-cnn', dest='custom_cnn', action='store_true',
+                              help='use custom cnn instead of default one')
     parser_model.add_argument('--use-gru', dest='use_gru', action='store_true',
                               help='use GRU instead of LSTM')
     parser_model.add_argument('--attn-num-layers', dest="attn_num_layers",
@@ -127,6 +130,7 @@ def process_args(args, defaults):
     parser_model.add_argument('--no-gradient-clipping', dest='clip_gradients', action='store_false',
                               help=('do not perform gradient clipping'))
     parser_model.set_defaults(clip_gradients=defaults.CLIP_GRADIENTS)
+
 
     # Training
     parser_train = subparsers.add_parser('train', parents=[parser_base, parser_model],
@@ -242,6 +246,7 @@ def main(args=None):
             session=sess,
             load_model=parameters.load_model,
             gpu_id=parameters.gpu_id,
+            custom_cnn=parameters.custom_cnn,
             use_gru=parameters.use_gru,
             use_distance=parameters.use_distance,
             max_image_width=parameters.max_width,

@@ -4,7 +4,12 @@ from __future__ import absolute_import
 
 import numpy as np
 import tensorflow as tf
-# from tensorflow.keras.models import Mode
+from tensorflow.keras.models import Model
+from tensorflow.keras.applications import ResNet50V2
+from tensorflow.keras.layers import Flatten
+resnet = ResNet50V2(weights="imagenet", include_top=False, input_shape=(300,40, 3))
+for layer in resnet.layers:
+    layer.trainable = False
 
 
 def var_random(name, shape, regularizable=False):
@@ -133,29 +138,15 @@ class CNN(object):
         """
         net = tf.add(input_tensor, (-128.0))
         net = tf.multiply(net, (1/128.0))
+        resnet = ResNet50V2(weights="imagenet", input_tensor=net,input_shape=(300,40,3), include_top=False)
+        for layer in resnet.layers:
+            layer.trainable = False
+        # resnet = resnet.layers[-37].output
 
-        net = ConvRelu(net, 64, (3, 3), 'conv_conv1')
-        net = max_2x2pool(net, 'conv_pool1')
-
-        net = ConvRelu(net, 128, (3, 3), 'conv_conv2')
-        net = max_2x2pool(net, 'conv_pool2')
-
-        net = ConvReluBN(net, 256, (3, 3), 'conv_conv3', is_training)
-        net = ConvRelu(net, 256, (3, 3), 'conv_conv4')
-        net = max_2x1pool(net, 'conv_pool3')
-
-        net = ConvReluBN(net, 512, (3, 3), 'conv_conv5', is_training)
-        net = ConvRelu(net, 512, (3, 3), 'conv_conv6')
-        net = max_2x1pool(net, 'conv_pool4')
-
-        net = ConvReluBN(net, 512, (2, 2), 'conv_conv7', is_training)
-        net = max_2x1pool(net, 'conv_pool5')
-        # net = dropout(net, is_training)
-
-        net = tf.squeeze(net, axis=1)
-
+        net = tf.squeeze(resnet.layers[-34].output, axis=1)
+        # net = Flatten()(net)
+        print(net)
         self.model = net
-
     def tf_output(self):
         # if self.input_tensor is not None:
         return self.model
