@@ -3,7 +3,9 @@
 # 2. https://stackoverflow.com/questions/17170752/python-opencv-load-image-from-byte-string
 # 3. https://medium.com/@jsflo.dev/saving-and-loading-a-tensorflow-model-using-the-savedmodel-api-17645576527
 
-
+# Runs flask webapp on http://localhost:5000
+# Takes SavedModel path as argument
+# python app.py ./exported-model/default-model
 
 from flask import Flask, request, redirect, jsonify
 import tensorflow as tf
@@ -18,6 +20,7 @@ export_path = sys.argv[1]
 
 app = Flask(__name__)
 
+# Starting tf Session and loading saved model
 sess = tf.Session(graph=tf.Graph())
 tf.saved_model.loader.load(sess, ["serve"], export_path)
 
@@ -30,6 +33,7 @@ def detect_text():
         send_res = {"response":[]}
         images = []
         filenames = []
+        # Creating a list of images as bytes to feed to the model
         for img in files:
             image = img.read()
             images.append(image)
