@@ -1,0 +1,1 @@
+python make_predictions.py ./exported-model/default-model $1 $2

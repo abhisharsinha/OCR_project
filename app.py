@@ -39,8 +39,8 @@ def detect_text():
             images.append(image)
             filenames.append(img.filename)
         
+        # out is a list of two lists for pred and prob
         out = sess.run(['prediction:0', 'probability:0'], feed_dict={'input_image_as_bytes:0': images}) 
-        # Returns a list of two lists for pred and prob
 
         for img_name, pred, prob in zip(filenames, out[0], out[1]):
             temp = {"filename":img_name, "prediction":pred.decode("utf-8"), "probability":prob}

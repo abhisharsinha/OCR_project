@@ -1,5 +1,6 @@
 # Get alphabets to use in CHARMAP of aocr
 
+# Path to the labels file of generated images
 file_path = "./text_renderer/output/default/labels.txt"
 
 alphabet = set()

@@ -1,0 +1,9 @@
+#Python-3.7.5
+
+pip install -r requirements.txt
+
+To run the web app
+1. Using default model:
+python app.py ./exported-model/default-model
+2. Using modified model:
+python app.py ./exported-model/custom-model

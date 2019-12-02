@@ -13,5 +13,6 @@ for file in os.listdir(BG_DIR):
 	for i in range(6):
 		for j in range(6):
 			tmp = img[i*row_m:(i+1)*row_m, j*col_m:(j+1)*col_m, :]
+			# Write the cropped part of an image to a file
 			cv2.imwrite(BG_DIR+"_"+str(i)+str(j)+file, tmp)
 
