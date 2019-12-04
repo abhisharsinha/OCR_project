@@ -13,15 +13,22 @@ Converting images to tfrecords
 2. Used <aocr dataset> command to generate tfrecords.
 
 
+MODEL-DEFAULT:
+1. Used default cnn of the library, embedding size 20 and 2 attention layers with 128 hidden units each.
+2. Trained the model using batch size of 64 for 30 epochs.
+
+MODEL-CUSTOM:
+1. Added an extra convolutional layer with relu activation at the top of default cnn architecture. Used Embedding size 20 and 2 attention layers with 128 hidden units each.
+2. Trained the model using batch size of 64 for 5 epochs.
 
 
-Changes to text_renderer:
+CHANGES TO text_renderer:
 1. Added different fonts from font-squirrel.com (open-source) to generate images.
 2. Added coloured background images and added more font colours in config/default.yaml
 3. Added emails and numbers corpus, uppdercase and lowercase words corpus to data/corpus.
 
 
-Changes to attention-aocr/aocr:
+CHANGES TO attention-aocr/aocr:
 1. Modified train method of Model class in model/model.py to save training loss at every step to a file and save the loss vs steps plot as png.
 2. Modified test method of Model class in model/model.py to save predicted vs actual text for every incorrect preciction. Used it to see if there is a pattern in incorrect predictions.
 3. Created CNN_cust class in model/cnn_custom_two.py containing custom cnn architecture.
