@@ -1,4 +1,4 @@
-# Script to split one background images into multiple images
+# Script to split one background images into multiple images to use in text_renderer
 
 import cv2
 import os

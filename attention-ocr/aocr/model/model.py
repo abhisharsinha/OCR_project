@@ -15,7 +15,7 @@ import tensorflow as tf
 
 from six.moves import xrange  # pylint: disable=redefined-builtin
 from .cnn import CNN
-from .cnn_custom_two import CNN_custom
+from .cnn_custom_two import CNN_cust
 from .seq2seq_model import Seq2SeqModel
 from ..util.data_gen import DataGen
 from ..util.visualizations import visualize_attention
@@ -165,8 +165,8 @@ class Model(object):
                 else:
                     self.target_weights.append(tf.tile([0.], [num_images]))
 
-            if self.custom_cnn:
-                cnn_model = CNN_custom(self.img_data, not self.forward_only)
+            if custom_cnn:
+                cnn_model = CNN_cust(self.img_data, not self.forward_only)
             else:
                 cnn_model = CNN(self.img_data, not self.forward_only)
             self.conv_output = cnn_model.tf_output()

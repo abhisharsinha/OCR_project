@@ -2,8 +2,12 @@
 
 pip install -r requirements.txt
 
+To generate annotations for image dir:
+./my_run.sh <Image_Dir> <Output_File_Path>
+
 To run the web app
 1. Using default model:
 python app.py ./exported-model/default-model
 2. Using modified model:
 python app.py ./exported-model/custom-model
+

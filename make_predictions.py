@@ -2,6 +2,7 @@
 
 # Saves predictions to a file in the following format
 # <image_name> <predicted_text>
+# HOW TO RUN
 # python make_predictions.py <SavedModel path> <image directory> <output file>
 
 import tensorflow as tf
