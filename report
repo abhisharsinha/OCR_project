@@ -22,6 +22,15 @@ MODEL-CUSTOM:
 2. Trained the model using batch size of 64 for 5 epochs.
 
 
+API:
+1. Exported the model to SavedModel format.
+2. Wrote flaski api to consume the model.
+3. Created client page where client can upload multiple images and get the following json response
+{"response":
+[{"image_file_name": "", "predicted text" : "", "probal=bility": ""}]
+}
+
+
 CHANGES TO text_renderer:
 1. Added different fonts from font-squirrel.com (open-source) to generate images.
 2. Added coloured background images and added more font colours in config/default.yaml
