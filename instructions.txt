@@ -11,3 +11,16 @@ python app.py ./exported-model/default-model
 2. Using modified model:
 python app.py ./exported-model/custom-model
 
+
+=================================================
+
+TO TEST ALL FILES AND PROCEDURES
+--------------------------------
+
+pip install -r requirements.txt
+pip install -r ./text_renderer/requirements.txt
+pip install ./attention-ocr/
+
+To test model-checkpoints:
+
+aocr test --target-embedding-size 20 --use-gru  <test_filename>.tfrecords

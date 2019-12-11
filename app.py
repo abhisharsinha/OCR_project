@@ -10,6 +10,7 @@
 from flask import Flask, request, redirect, jsonify
 import tensorflow as tf
 import sys
+import numpy as np
 
 if not len(sys.argv) == 2:
     raise Exception("Provide path of savedmodel")
@@ -43,7 +44,7 @@ def detect_text():
         out = sess.run(['prediction:0', 'probability:0'], feed_dict={'input_image_as_bytes:0': images}) 
         
         # Cannot zip non-lists so making list of single value when out[1] is not a list
-        if not type(out[1]) == list:
+        if not type(out[1]) == np.ndarray:
         	out[0] = [out[0]]
         	out[1] = [out[1]]
         for img_name, pred, prob in zip(filenames, out[0], out[1]):
