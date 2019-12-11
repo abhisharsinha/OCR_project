@@ -12,6 +12,9 @@ import tensorflow as tf
 import sys
 import numpy as np
 
+# Allow only image files
+ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg']
+
 if not len(sys.argv) == 2:
     raise Exception("Provide path of savedmodel")
 
@@ -31,22 +34,34 @@ def detect_text():
         return app.send_static_file('./index.html')
     if request.method == "POST":
         files = request.files.getlist("image")
+        
+        # if no file is selected
+        if files[0].filename == "":
+            print("NO FILES")
+            return app.send_static_file('./index.html')
         send_res = {"response":[]}
         images = []
         filenames = []
         # Creating a list of images as bytes to feed to the model
         for img in files:
+            # Checking if all uploaded files are images
+            if img.filename.split(".")[-1] not in ALLOWED_EXTENSIONS:
+                continue
             image = img.read()
             images.append(image)
             filenames.append(img.filename)
         
+        # If not image files then redirect
+        if not filenames:
+            return app.send_static_file('./index.html')
+
         # out is a list of two lists for pred and prob
         out = sess.run(['prediction:0', 'probability:0'], feed_dict={'input_image_as_bytes:0': images}) 
         
         # Cannot zip non-lists so making list of single value when out[1] is not a list
         if not type(out[1]) == np.ndarray:
-        	out[0] = [out[0]]
-        	out[1] = [out[1]]
+            out[0] = [out[0]]
+            out[1] = [out[1]]
         for img_name, pred, prob in zip(filenames, out[0], out[1]):
             temp = {"filename":img_name, "prediction":pred.decode("utf-8"), "probability":prob}
             send_res["response"].append(temp)
