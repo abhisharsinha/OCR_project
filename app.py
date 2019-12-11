@@ -41,7 +41,11 @@ def detect_text():
         
         # out is a list of two lists for pred and prob
         out = sess.run(['prediction:0', 'probability:0'], feed_dict={'input_image_as_bytes:0': images}) 
-
+        
+        # Cannot zip non-lists so making list of single value when out[1] is not a list
+        if not type(out[1]) == list:
+        	out[0] = [out[0]]
+        	out[1] = [out[1]]
         for img_name, pred, prob in zip(filenames, out[0], out[1]):
             temp = {"filename":img_name, "prediction":pred.decode("utf-8"), "probability":prob}
             send_res["response"].append(temp)

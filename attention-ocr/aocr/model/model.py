@@ -316,7 +316,7 @@ class Model(object):
         current_step = 0
         num_correct = 0.0
         num_total = 0.0
-        test_error_log_file = open("test_errors_log_"+self.start_time, "w")
+        test_error_log_file = open("test_logs/test_errors_log_"+self.start_time, "w")
         print("predicted ;;; true", file=test_error_log_file)
 
         s_gen = DataGen(data_path, self.buckets, epochs=1, max_width=self.max_original_width)
