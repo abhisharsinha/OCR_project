@@ -21,8 +21,22 @@ pip install -r requirements.txt
 pip install -r ./text_renderer/requirements.txt
 pip install ./attention-ocr/
 
-To test model-checkpoints:
 
-1. Add the checkpoint file path to checkpoint file
+To test model-checkpoints:
+--------------------------
+
+1. To test default model:
+	1.1. Add the checkpoint file path to the "checkpoint" file in model-path
 eg. model_checkpoint_path: "model.ckpt-8200"
-2. aocr test --target-embedding-size 20 --use-gru  <test_filename>.tfrecords
+must be present in checkpoint file in <checkpoints_dir>
+	1.2. aocr test --target-embedding-size 20 --use-gru  --model-dir <checkpoints_dir> <test_filename>.tfrecords
+
+2. To test custom model:
+
+	2.1. Add the checkpoint file path to the "checkpoint" file in model-path
+eg. model_checkpoint_path: "model.ckpt-24960"
+
+	2.2. aocr test --target-embedding-size 20 --custom-cnn --model-dir <checkpoints_dir> <test_filename>
+
+eg. aocr test --target-embedding-size 20 --custom-cnn --model-dir ./checkpoints ./datasets/new-test.tfrecords 
+
