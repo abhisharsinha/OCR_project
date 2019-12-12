@@ -23,4 +23,6 @@ pip install ./attention-ocr/
 
 To test model-checkpoints:
 
-aocr test --target-embedding-size 20 --use-gru  <test_filename>.tfrecords
+1. Add the checkpoint file path to checkpoint file
+eg. model_checkpoint_path: "model.ckpt-8200"
+2. aocr test --target-embedding-size 20 --use-gru  <test_filename>.tfrecords

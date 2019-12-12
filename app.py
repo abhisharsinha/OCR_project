@@ -37,8 +37,8 @@ def detect_text():
         
         # if no file is selected
         if files[0].filename == "":
-            print("NO FILES")
-            return app.send_static_file('./index.html')
+            print("No files uploaded!")
+            return redirect(request.url)
         send_res = {"response":[]}
         images = []
         filenames = []
@@ -53,7 +53,8 @@ def detect_text():
         
         # If not image files then redirect
         if not filenames:
-            return app.send_static_file('./index.html')
+            print("No images uploaded!")
+            return redirect(request.url)
 
         # out is a list of two lists for pred and prob
         out = sess.run(['prediction:0', 'probability:0'], feed_dict={'input_image_as_bytes:0': images}) 
