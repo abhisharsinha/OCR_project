@@ -2,7 +2,7 @@
 
 pip install -r requirements.txt
 
-To generate annotations for image dir:
+To generate annotations for image dir (saves "<image_filename> <predicted_text>: into the output file):
 ./my_run.sh <Image_Dir> <Output_File_Path>
 
 To run the web app
@@ -29,14 +29,30 @@ To test model-checkpoints:
 	1.1. Add the checkpoint file path to the "checkpoint" file in model-path
 eg. model_checkpoint_path: "model.ckpt-8200"
 must be present in checkpoint file in <checkpoints_dir>
-	1.2. aocr test --target-embedding-size 20 --use-gru  --model-dir <checkpoints_dir> <test_filename>.tfrecords
+	1.2. aocr test --target-embedding-size 20 --use-gru  --model-dir <default_model_checkpoints_dir> <test_filename>.tfrecords
 
 2. To test custom model:
 
 	2.1. Add the checkpoint file path to the "checkpoint" file in model-path
 eg. model_checkpoint_path: "model.ckpt-24960"
 
-	2.2. aocr test --target-embedding-size 20 --custom-cnn --model-dir <checkpoints_dir> <test_filename>
+	2.2. aocr test --target-embedding-size 20 --custom-cnn --model-dir <xustom_model_checkpoints_dir> <test_filename>
 
 eg. aocr test --target-embedding-size 20 --custom-cnn --model-dir ./checkpoints ./datasets/new-test.tfrecords 
+
+
+To generate images
+------------------
+
+1. Make changes to text_renderer/generate_images.sh according to number of images to generate.
+2. Run text_renderer/generate_images.sh
+3. The images will be saved in text_renderer/output/default
+
+To generate tfrecords
+---------------------
+
+aocr dataset <annotations_file_path> <dataset_filename_to_save.tfrecords>
+
+
+
 
